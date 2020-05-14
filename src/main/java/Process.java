@@ -9,45 +9,55 @@
  * @author Martin
  */
 public class Process {
-    private int duration;
-    private int arrivalTime;
+    private String name;
+    private int tCpu;
+    private int tDone;
+    private int tArrival;
+    private int tFinished;
     
-    public Process(int duration, int arrivalTime){
-        this.duration = duration;
-        this.arrivalTime = arrivalTime;
+    public Process(int duration, int arrivalTime, String name){
+        this.tCpu = duration;
+        this.tArrival = arrivalTime;
+        this.name = name;
     }
     
-    public Process() {
-        this(0, 0);
+    public void setTfinished(int time){
+        this.tFinished = time;
     }
     
-    public int getDuration(){
-        return this.duration;
+    public int getTcpu(){
+        return this.tCpu;
     }
     
-    public void reduceDuration(){
-        this.duration--;
+    public void tDoneIncrease(){
+        this.tDone++;
+    }
+    
+    public String getName(){
+        return this.name;
+    }
+    
+    public boolean isFinished(){
+        return this.tDone == this.tCpu;
     }
     
     public String toString(){
-        return "((Arrival time = " + this.arrivalTime + " , Duration = " + this.duration+"))";
+        return "(Process name: " + this.name + ", tCpu: " + this.tCpu + ", Arrival time: " + this.tArrival + ")";
     }
-    /*
-    public boolean equals(Object compared){
-        if (this == compared)
-            return true;
-        return false;
-        
-        
-        
-        Process comparedProcess = (Process) compared;
-        
-        if(this.arrivalTime == comparedProcess.arrivalTime &&
-                this.duration == comparedProcess.duration)
-            return true;
-        
-        return false;
-        
+    
+    public int getTfinished(){
+        return this.tFinished;
     }
-    */
+    
+    public int waitTime(){
+        return this.returnTime() - this.tCpu;
+    }
+    
+    public int returnTime(){
+        return this.getTfinished()+1 - this.tArrival;
+    }
+    
+    public double normalizedReturn(){
+        return (double)this.returnTime()/this.tCpu;
+    }
 }
